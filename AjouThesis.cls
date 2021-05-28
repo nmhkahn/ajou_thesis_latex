@@ -2,9 +2,6 @@
 \ProvidesClass{AjouThesis}
 \LoadClass[11pt,onecolumn,oneside]{report}
 
-%% Table of contents, List of figures, List of tables를 Table of Contents에 추가
-\usepackage{tocbibind}
-
 %% 편집용지 설정 (4x6 배판 - 190x260 mm2)
 \usepackage[inner=20mm, outer=20mm, top=25mm, bottom=25mm,
             paperwidth=190mm, paperheight=260mm]{geometry}
@@ -21,17 +18,34 @@
 \usepackage[square,numbers]{natbib}
 \bibliographystyle{ieeetr}
 
+%% Part, Chapter title size 조정
+\usepackage{titlesec}
+\titleformat{\part}[display]
+    {\centering\normalfont\huge\bfseries}
+    {\centering\partname~\thepart}{15pt}{\huge\setstretch{1.0}}
+    
+\titleformat{\chapter}[display]
+    {\normalfont\huge\bfseries}
+    {\chaptertitlename~\thechapter}{15pt}{\huge\setstretch{1.0}}
+
 %% 추가 패키지 설정
-\RequirePackage{ifthen}       
+\RequirePackage{ifthen}
+\RequirePackage{hyperref}
 \RequirePackage[strict]{changepage}
-\RequirePackage{graphicx,xcolor}
+\RequirePackage{graphicx}
+\RequirePackage[dvipsnames]{xcolor}
 \RequirePackage[toc,page]{appendix}
-\RequirePackage{amsmath,amssymb,textcomp,bm}
-\RequirePackage{multirow,makecell,subcaption,float}
+\RequirePackage{amsmath,amssymb,subfigure,textcomp,bm}
+\RequirePackage{multirow,makecell,float}
 \RequirePackage{xcolor}
 \RequirePackage{footnote}
-\RequirePackage{blindtext}
 \RequirePackage{caption,setspace}
+\RequirePackage{arydshln}
+
+%% Table of contents, List of figures, List of tables를 Table of Contents에 추가
+\usepackage[subfigure]{tocloft}
+\renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}} % for chapters
+
 %% Caption의 줄간격 설정
 \captionsetup[table]{font={stretch=1.1}}
 \captionsetup[figure]{font={stretch=1.1}}
@@ -97,6 +111,8 @@
     % 여백 되돌림
     \restoregeometry
     \refstepcounter{dummy}
+    \pagenumbering{roman}
+    \setcounter{page}{1}
     \makeacknowledgement
     % 초록 페이지 생성
     \makeabstract
@@ -105,6 +121,8 @@
     \pagenumbering{arabic}
     \setcounter{page}{1}
     \renewcommand{\baselinestretch}{1.8}\selectfont
+    \setlength\parindent{5mm}
+    \setlength\parskip{0.5em}
 }
 
 
@@ -227,9 +245,6 @@
 \newcommand{\makeacknowledgement}
 {
     \newpage
-    \thispagestyle{empty}
-    \addcontentsline{toc}{chapter}{Acknowledgement}
-    \pagenumbering{gobble}
     \begin{center}
         \fontsize{16pt}{16pt}\selectfont{\bf Acknowledgement}
     \end{center}
@@ -248,9 +263,6 @@
 \newcommand{\makeabstract}
 {
     \newpage
-    \thispagestyle{empty}
-    \addcontentsline{toc}{chapter}{Abstract}
-    \pagenumbering{gobble}
     \begin{center}
         \fontsize{16pt}{16pt}\selectfont{\bf Abstract}
     \end{center}
@@ -268,9 +280,12 @@
 %%
 \newcommand{\makecontents}
 {
-    \renewcommand{\baselinestretch}{1.8}\selectfont
+    \clearpage
+    \renewcommand{\baselinestretch}{1.3}\selectfont
     \tableofcontents
+    \clearpage
     \listoffigures
+    \clearpage
     \listoftables
     \clearpage
 }
