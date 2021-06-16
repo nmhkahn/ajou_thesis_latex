@@ -41,6 +41,7 @@
 \RequirePackage{footnote}
 \RequirePackage{caption,setspace}
 \RequirePackage{arydshln}
+\RequirePackage{pdfpages}
 
 %% Table of contents, List of figures, List of tables를 Table of Contents에 추가
 \usepackage[subfigure]{tocloft}
